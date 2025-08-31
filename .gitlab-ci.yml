@@ -1,4 +1,3 @@
-﻿# .gitlab-ci.yml - VERSÃO FINAL CORRIGIDA
 stages:
   - build
   - test
@@ -37,9 +36,9 @@ test:
 
 package:
   stage: package
-  image: docker:28.3.3
+  image: docker:24.0.5
   services:
-    - docker:28.3.3-dind
+    - docker:24.0.5-dind
   dependencies:
     - test
   before_script:
