@@ -39,7 +39,7 @@ package:
   stage: package
   image: docker:28.3.3
   services:
-    - docker:dind
+    - docker:28.3.3-dind
   dependencies:
     - test
   before_script:
