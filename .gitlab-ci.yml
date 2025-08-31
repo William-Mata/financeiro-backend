@@ -62,15 +62,10 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    # DEBUG: Ver se variável existe
-    - echo "SERVER_HOST = $SERVER_HOST"
-    - echo "SERVER_USER = $SERVER_USER"
-    # Tentar ping antes do ssh-keyscan
-    - ping -c 3 $SERVER_HOST || echo "Ping falhou"
     - ssh-keyscan -p 2222 -H $SERVER_HOST >> ~/.ssh/known_hosts
   script:
     - |
-      ssh $SERVER_USER@$SERVER_HOST "
+      ssh -p 2222 $SERVER_USER@$SERVER_HOST "
         cd /opt/minha-app &&
         echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY &&
         docker pull $IMAGE_TAG &&
@@ -81,7 +76,7 @@ deploy:
       "
     # Verificar se deploy funcionou
     - sleep 10
-    - ssh $SERVER_USER@$SERVER_HOST "curl -f http://localhost:5000/health"
+    - ssh -p 2222 $SERVER_USER@$SERVER_HOST "curl -f http://localhost:5000/health"
   environment:
     name: production
     url: http://$SERVER_HOST:5000
