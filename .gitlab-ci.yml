@@ -1,4 +1,4 @@
-﻿# .gitlab-ci.yml
+﻿# .gitlab-ci.yml - VERSÃO FINAL CORRIGIDA
 stages:
   - build
   - test
@@ -11,7 +11,6 @@ variables:
   DOCKER_TLS_CERTDIR: "/certs"
   IMAGE_TAG: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
 
-# Build .NET
 build:
   stage: build
   image: mcr.microsoft.com/dotnet/sdk:$DOTNET_VERSION
@@ -24,9 +23,8 @@ build:
       - "**/obj/"
     expire_in: 1 hour
   tags:
-    - dotnet
+    - docker
 
-# Testes
 test:
   stage: test
   image: mcr.microsoft.com/dotnet/sdk:$DOTNET_VERSION
@@ -35,14 +33,13 @@ test:
   script:
     - dotnet test --configuration Release --no-build --verbosity normal
   tags:
-    - dotnet
+    - docker
 
-# Build Docker image
 package:
   stage: package
-  image: docker:24.0.5
+  image: docker:28.3.3
   services:
-    - docker:24.0.5-dind
+    - docker:dind
   dependencies:
     - test
   before_script:
@@ -55,14 +52,13 @@ package:
   tags:
     - docker
 
-# Deploy
 deploy:
   stage: deploy
   image: alpine:latest
   dependencies:
     - package
   before_script:
-    - apk add --no-cache openssh-client docker-cli docker-cli-compose
+    - apk add --no-cache openssh-client docker-cli
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
@@ -73,7 +69,6 @@ deploy:
       ssh $SERVER_USER@$SERVER_HOST "
         cd /opt/minha-app &&
         echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY &&
-        export TAG=$CI_COMMIT_SHORT_SHA &&
         docker pull $IMAGE_TAG &&
         docker stop minha-app-api || true &&
         docker rm minha-app-api || true &&
