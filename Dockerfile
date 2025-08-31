@@ -14,8 +14,7 @@ RUN dotnet restore
 COPY . .
 
 # Build e publicar
-WORKDIR /Financeiro.API
-RUN dotnet publish -c Release -o /app/publish --no-restore
+RUN dotnet publish ./Financeiro.API/Financeiro.API.csproj -c Release -o /app/publish --no-restore
 
 # Runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
