@@ -82,6 +82,7 @@ deploy:
     url: http://$SERVER_HOST:5000
   only:
     - main
-  when: manual
+  #descomentar a linha abaixo para deploy manual.
+  #when: manual
   tags:
     - docker
