@@ -5,7 +5,7 @@ WORKDIR /src
 # Copiar solução e projetos
 COPY *.sln .
 COPY Financeiro.API/*.csproj ./Financeiro.API/
-COPY Financeiro.Testes/*.csproj ./testes/Financeiro.Testes/
+COPY Financeiro.Testes/*.csproj ./Financeiro.Testes/
 
 # Restaurar dependências
 RUN dotnet restore
@@ -14,7 +14,7 @@ RUN dotnet restore
 COPY . .
 
 # Build e publicar
-WORKDIR /src/src/Financeiro.API
+WORKDIR /Financeiro.API
 RUN dotnet publish -c Release -o /app/publish --no-restore
 
 # Runtime image
