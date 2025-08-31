@@ -4,7 +4,7 @@ WORKDIR /src
 
 # Copiar solução e projetos
 COPY *.sln .
-COPY src/Financeiro.API/Financeiro.API.csproj ./src/Financeiro.API/
+COPY Financeiro.API/*.csproj ./Financeiro.API/
 COPY Financeiro.Testes/*.csproj ./testes/Financeiro.Testes/
 
 # Restaurar dependências
