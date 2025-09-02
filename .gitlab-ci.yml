@@ -8,7 +8,7 @@ variables:
   DOTNET_VERSION: "8.0"
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: "/certs"
-  IMAGE_TAG: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+  IMAGE_TAG: "$CI_REGISTRY_IMAGE:latest"
 
 build:
   stage: build
