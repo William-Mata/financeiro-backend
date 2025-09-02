@@ -66,15 +66,11 @@ deploy:
   script:
     - |
       ssh -p 2222 $SERVER_USER@$SERVER_HOST "
-        cd /opt/minha-app &&
+        cd /srv/docker/composes/financeiro-backend/ &&
         echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY &&
-        docker pull $IMAGE_TAG &&
-        docker stop minha-app-api || true &&
-        docker rm minha-app-api || true &&
-        docker run -d --name minha-app-api -p 5000:8080 --restart unless-stopped $IMAGE_TAG &&
-        docker system prune -f
+        docker compose down || true &&
+        docker compose up -d
       "
-    # Verificar se deploy funcionou
     - sleep 10
     - ssh -p 2222 $SERVER_USER@$SERVER_HOST "curl -f http://localhost:5000/health"
   environment:
