@@ -68,6 +68,7 @@ deploy:
       ssh -p 2222 $SERVER_USER@$SERVER_HOST "
         cd /srv/docker/composes/financeiro-backend/ &&
         echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY &&
+        docker compose pull &&
         docker compose down || true &&
         docker compose up -d
       "
