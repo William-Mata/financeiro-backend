@@ -57,6 +57,7 @@ deploy:
   dependencies:
     - package
   before_script:
+    - apk add --no-cache openssh-client curl
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
