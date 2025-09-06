@@ -34,18 +34,37 @@ test:
   tags:
     - docker
 
+# UTILIZANDO DOCKER IN DOCKER - NÃO MUITO RECOMENDADO
+# package:
+#   stage: package
+#   image: docker:24.0.5
+#   services:
+#     - docker:24.0.5-dind
+#   dependencies:
+#     - test
+#   before_script:
+#     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+#   script:
+#     - docker build -t $IMAGE_TAG .
+#     - docker push $IMAGE_TAG
+#   only:
+#     - main
+#   tags:
+#     - docker
+
+# UTILIZANDO KANIKO - MAIS RECOMENDADO
 package:
   stage: package
-  image: docker:24.0.5
-  services:
-    - docker:24.0.5-dind
+  image: 
+    name: gcr.io/kaniko-project/executor:v1.9.0-debug
+    entrypoint: [""]
   dependencies:
     - test
   before_script:
-    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
   script:
-    - docker build -t $IMAGE_TAG .
-    - docker push $IMAGE_TAG
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $IMAGE_TAG --cache=true --cache-ttl=168h --verbosity=info
   only:
     - main
   tags:
