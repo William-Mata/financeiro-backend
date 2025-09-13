@@ -7,7 +7,7 @@ COPY *.sln .
 COPY Financeiro.API/*.csproj ./Financeiro.API/
 COPY Financeiro.Application/*.csproj ./Financeiro.Application/
 COPY Financeiro.Domain/*.csproj ./Financeiro.Domain/
-COPY Financeiro.Infraestrutura/*.csproj ./Financeiro.Infraestrutura/
+COPY Financeiro.Infrastructure/*.csproj ./Financeiro.Infrastructure/
 COPY Financeiro.Testes/*.csproj ./Financeiro.Testes/
 
 # Restaurar dependências
