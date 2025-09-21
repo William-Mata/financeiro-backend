@@ -1,13 +1,24 @@
+using Financeiro.Application;
+using Financeiro.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
+#region SERVICES
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
 
+builder.Services.AddApplication();
+
+builder.Services.AddInfrastructure(builder.Configuration);
+
+#endregion
+
+#region APP
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// CONFIGURAÇÃO DO SWAGGER PARA DESENVOLVIMENTO E PRODUÇÃO
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
@@ -19,13 +30,5 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
 
-app.MapGet("/info", () => new
-{
-    Version = "1.0.0",
-    Environment = app.Environment.EnvironmentName,
-    Timestamp = DateTime.UtcNow,
-    Message = "API funcionando!"
-});
-
-
 app.Run();
+#endregion
