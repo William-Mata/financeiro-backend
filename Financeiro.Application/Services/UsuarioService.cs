@@ -27,7 +27,7 @@ public class UsuarioService : IUsuarioService
         }
         catch(Exception ex)
         {
-            throw ex;
+            throw new Exception(ex.Message);
         }
     }
 
@@ -41,7 +41,7 @@ public class UsuarioService : IUsuarioService
         }
         catch(Exception ex)
         {
-            throw ex;
+            throw new Exception(ex.Message);
         }
     }
 
@@ -60,7 +60,7 @@ public class UsuarioService : IUsuarioService
         catch(Exception ex)
         {
             await _unitOfWork.RollbackAsync();
-            throw ex;
+            throw new Exception(ex.Message);
         }
     }
 
@@ -79,7 +79,7 @@ public class UsuarioService : IUsuarioService
         catch(Exception ex)
         {
             await _unitOfWork.RollbackAsync();
-            throw ex;
+            throw new Exception(ex.Message);
         }
     }
 
@@ -96,7 +96,7 @@ public class UsuarioService : IUsuarioService
         catch (Exception ex)
         {
             await _unitOfWork.RollbackAsync();
-            throw ex;
+            throw new Exception(ex.Message);
         }
     }
 }

@@ -15,23 +15,38 @@ public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
 
         builder.Property(u => u.Nome)
                 .IsRequired()
-                .HasMaxLength(250);
+                .HasMaxLength(255);
 
         builder.Property(u => u.Email)
                 .IsRequired()
-                .HasMaxLength(250);
+                .HasMaxLength(255);
 
         builder.Property(u => u.Senha)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(255);
+
+        builder.Property(u => u.RefreshToken)
+              .IsRequired()
+              .HasMaxLength(255);
+
+        builder.Property(u => u.QuantidadeTentativasLogin)
+                .IsRequired()
+                .HasDefaultValue(0);
 
         builder.Property(u => u.Status)
                 .HasConversion<string>()
                 .IsRequired();
 
+        builder.Property(u => u.DataExpiracaoRefreshToken);
+
         builder.Property(u => u.DataCadastro)
                 .IsRequired();
 
         builder.Property(u => u.DataUltimaAtualizacao);
+
+        builder.Property(u => u.DataUltimoAcesso);
+
+        builder.Property(u => u.DataBloqueio);
 
         builder.Ignore(x => x.PerfilDeAcessos);
     }
