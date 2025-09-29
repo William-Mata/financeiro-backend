@@ -1,4 +1,4 @@
-﻿namespace Financeiro.Infrastructure.Sercurity;
+﻿namespace Financeiro.Application.Interfaces;
 
 public interface ISenhaHasher
 {

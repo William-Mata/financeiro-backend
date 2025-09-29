@@ -1,10 +1,8 @@
 ﻿namespace Financeiro.Application.DTOs.Usuario;
 
-public record UsuarioCadastroDto
-(
-    string Nome,
-
-    string Email,
-
-    string Senha
-);
+public class UsuarioCadastroDto
+{ 
+    public string Nome { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Senha { get; set; } = string.Empty;
+};

@@ -25,10 +25,10 @@ public class Usuario : BaseEntity
         DataCadastro = DateTime.UtcNow;
     }
        
-    public void AtualizarRefreshToken(string refreshToken, DateTime dataExpiracao)
+    public void AtualizarRefreshToken(string refreshToken)
     {
         RefreshToken = refreshToken;
-        DataExpiracaoRefreshToken = dataExpiracao;
+        DataExpiracaoRefreshToken = DateTime.UtcNow.AddDays(7);
     }
 
     public void LimparRefreshToken()
@@ -92,4 +92,10 @@ public class Usuario : BaseEntity
     {
         DataUltimoAcesso = DateTime.UtcNow;
     }
+
+    public void ResetarTentativasLogin()
+    {
+        QuantidadeTentativasLogin = 0;
+    }
+
 }

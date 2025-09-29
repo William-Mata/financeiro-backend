@@ -18,13 +18,13 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpGet("ListarAsync")]
-    public async Task<ActionResult<IEnumerable<UsuarioDto>>> ListarAsync()
+    public async Task<ActionResult<IEnumerable<UsuarioDto>>> ListarAsync(CancellationToken cancellationToken)
     {
         try
         {
             _logger.LogInformation("Buscando todos os usuarios.");
 
-            IEnumerable<UsuarioDto> usuarios = await _usuarioService.ListarAsync();
+            IEnumerable<UsuarioDto> usuarios = await _usuarioService.ListarAsync(cancellationToken);
 
             return Ok(usuarios);
         }
@@ -36,12 +36,12 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<UsuarioDto>> BuscarPorIdAsync(uint id)
+    public async Task<ActionResult<UsuarioDto>> BuscarPorIdAsync(uint id, CancellationToken cancellationToken)
     {
         try
         {
             _logger.LogInformation("Buscando um usuario.");
-            UsuarioDto usuario = await _usuarioService.BuscarPorIdAsync(id);
+            UsuarioDto usuario = await _usuarioService.BuscarPorIdAsync(id, cancellationToken);
 
             return Ok(usuario);
         }
@@ -53,12 +53,12 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] UsuarioCadastroDto usuario)
+    public async Task<ActionResult> Post([FromBody] UsuarioCadastroDto usuario, CancellationToken cancellationToken)
     {
         try
         {
             _logger.LogInformation("Cadastrando um usuario.");
-            await _usuarioService.CadastrarAsync(usuario);
+            await _usuarioService.CadastrarAsync(usuario, cancellationToken);
 
             return Ok();
         }
@@ -70,12 +70,12 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPut()]
-    public async Task<ActionResult> Put([FromBody] UsuarioAtualizacaoDto usuario)
+    public async Task<ActionResult> Put([FromBody] UsuarioAtualizacaoDto usuario, CancellationToken cancellationToken)
     {
         try
         {
             _logger.LogInformation("Atualizando um usuario.");
-            await _usuarioService.AtualizarAsync(usuario);
+            await _usuarioService.AtualizarAsync(usuario, cancellationToken);
 
             return Ok();
         }
@@ -87,12 +87,12 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(uint id)
+    public async Task<ActionResult> Delete(uint id, CancellationToken cancellationToken)
     {
         try
         {
             _logger.LogInformation("Deletando um usuario.");
-            await _usuarioService.DeletarAsync(id);
+            await _usuarioService.DeletarAsync(id, cancellationToken);
 
             return Ok();
         }

@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using Financeiro.Application.Interfaces;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace Financeiro.Infrastructure.Sercurity;

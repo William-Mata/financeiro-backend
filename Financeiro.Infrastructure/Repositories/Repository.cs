@@ -21,7 +21,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         return await _dbSet.ToListAsync(cancellationToken);
     }
 
-    public async Task<T?> BuscarPorIddAsync(uint Id, CancellationToken cancellationToken = default)
+    public async Task<T?> BuscarPorIdAsync(uint Id, CancellationToken cancellationToken = default)
     {
         return await _dbSet.FindAsync([Id], cancellationToken);
     }
@@ -42,7 +42,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
 
     public async Task DeletarAsync(uint Id, CancellationToken cancellationToken = default)
     {
-        var entity = await this.BuscarPorIddAsync(Id, cancellationToken);
+        var entity = await this.BuscarPorIdAsync(Id, cancellationToken);
         if(entity != null)
         {
             _dbSet.Remove(entity);

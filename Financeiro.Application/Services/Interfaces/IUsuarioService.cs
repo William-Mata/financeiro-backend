@@ -6,6 +6,7 @@ public interface IUsuarioService
 {
     Task<IEnumerable<UsuarioDto>> ListarAsync(CancellationToken cancellationToken = default);
     Task<UsuarioDto> BuscarPorIdAsync(uint id, CancellationToken cancellationToken = default);
+    Task<UsuarioDto> BuscarPorEmailAsync(string email, CancellationToken cancellationToken = default);
     Task CadastrarAsync(UsuarioCadastroDto usuario, CancellationToken cancellationToken = default);
     Task AtualizarAsync(UsuarioAtualizacaoDto usuario, CancellationToken cancellationToken = default);
     Task DeletarAsync(uint id, CancellationToken cancellationToken = default);
