@@ -1,4 +1,5 @@
-﻿using Financeiro.API.Middlewares;
+﻿using Financeiro.API.Configurations;
+using Financeiro.API.Middlewares;
 
 namespace Financeiro.API;
 
@@ -8,7 +9,11 @@ public static class DependencyInjection
     {
         services.AddControllers();
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(s =>
+        {
+            SwaggerConfiguration.DocumentacaoSwagger(s);
+        });
+        
         services.AddHealthChecks();
 
         return services;
@@ -19,7 +24,28 @@ public static class DependencyInjection
         if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/integracoes/swagger.json", "API Integracoes v1");
+                s.RoutePrefix = "swagger"; 
+
+                s.DefaultModelsExpandDepth(-1);
+                s.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.List);
+            });
+
+            app.MapWhen(
+                context => context.Request.Path.StartsWithSegments("/swagger/interno"),
+                appBuilder =>
+                {
+                    appBuilder.UseSwaggerUI(c =>
+                    {
+                        c.SwaggerEndpoint("/swagger/interno/swagger.json", "API Interno v1");
+                        c.RoutePrefix = "swagger/interno"; 
+                        c.DocumentTitle = "API Interno - Documentação";
+                        c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.List);
+                    });
+                }
+            );
         }
 
         app.UseHttpsRedirection();
