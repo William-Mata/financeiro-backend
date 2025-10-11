@@ -54,6 +54,7 @@ public static class DependencyInjection
         app.MapHealthChecks("/health");
 
         app.UseMiddleware<AuditoriaMiddleware>();
+        app.UseMiddleware<AutenticacaoOpenAPIMiddleware>();
 
         return app;
     }

@@ -11,8 +11,8 @@ public class TesteController : ControllerBase
         
     }
 
-    [HttpGet("TesteAPI")]
-    public async Task<ActionResult> TesteAPI(CancellationToken cancellationToken)
+    [HttpGet("Teste")]
+    public async Task<ActionResult> Teste(CancellationToken cancellationToken)
     {
         try
         { 

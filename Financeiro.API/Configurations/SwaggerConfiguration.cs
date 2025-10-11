@@ -37,7 +37,7 @@ public static class SwaggerConfiguration
 
             if (docName == "integracoes")
             {
-                return fullName.Contains(".OpenApi.");
+                return fullName.Contains(".OpenAPI");
             }
 
             if (docName == "interno")
@@ -48,6 +48,4 @@ public static class SwaggerConfiguration
             return false;
         });
     }
-
-    //public static void 
 }
