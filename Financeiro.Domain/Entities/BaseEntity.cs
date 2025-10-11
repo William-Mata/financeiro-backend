@@ -7,5 +7,5 @@
 public class BaseEntity()
 {
     public DateTime DataCadastro { get; protected set; }
-    public DateTime DataUltimaAtualizacao { get; protected set; }
+    public DateTime? DataUltimaAtualizacao { get; protected set; }
 }

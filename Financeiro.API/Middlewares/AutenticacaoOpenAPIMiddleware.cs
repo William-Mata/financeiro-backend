@@ -40,17 +40,15 @@ public class AutenticacaoOpenAPIMiddleware
                 var body = await bodyStream.ReadToEndAsync();
                 context.Request.Body.Position = 0;
 
-                if (HMACValidacao.ValidarHMAC(body, assinatura, dataHoraRequisicao, _hmacSettings.SecretKey!))
-                {
-                    await _next.Invoke(context);
-                }
-                else
+                if (!HMACValidacao.ValidarHMAC(body, assinatura, dataHoraRequisicao, _hmacSettings.SecretKey!))
                 {
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                     await context.Response.WriteAsync("Não autorizado.");
                     return;
                 }
             }
+
+            await _next.Invoke(context);
         }
         catch (Exception ex)
         {

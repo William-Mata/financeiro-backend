@@ -48,4 +48,37 @@ public static class SwaggerConfiguration
             return false;
         });
     }
+
+    public static WebApplication SwaggerUIConfiguracao(this WebApplication app)
+    {
+        if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
+        {
+            app.UseSwagger();
+
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/integracoes/swagger.json", "API Integracoes v1");
+                s.RoutePrefix = "swagger/OpenAPI";
+
+                s.DefaultModelsExpandDepth(-1);
+                s.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.List);
+            });
+
+            app.MapWhen(
+                context => context.Request.Path.StartsWithSegments("/swagger"),
+                appBuilder =>
+                {
+                    appBuilder.UseSwaggerUI(c =>
+                    {
+                        c.SwaggerEndpoint("/swagger/interno/swagger.json", "API Interno v1");
+                        c.RoutePrefix = "swagger";
+                        c.DocumentTitle = "API Interno - Documentação";
+                        c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.List);
+                    });
+                }
+            );
+        }
+
+        return app;
+    }
 }

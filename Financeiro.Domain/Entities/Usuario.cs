@@ -8,10 +8,10 @@ public class Usuario : BaseEntity
     public string Nome { get; private set; } 
     public string Email { get; private set; } 
     public string Senha { get; private set; }
-    public sbyte QuantidadeTentativasLogin { get; private set; }
+    public byte QuantidadeTentativasLogin { get; private set; }
     public string? RefreshToken { get; set; }
     public DateTime? DataExpiracaoRefreshToken { get; set; }
-    public DateTime DataUltimoAcesso { get; private set; }
+    public DateTime? DataUltimoAcesso { get; private set; }
     public DateTime? DataBloqueio { get; private set; }
     public StatusUsuario Status {get; private set;}
     public IEnumerable<PerfilDeAcesso>? PerfilDeAcessos { get; private set; }
@@ -97,5 +97,4 @@ public class Usuario : BaseEntity
     {
         QuantidadeTentativasLogin = 0;
     }
-
 }

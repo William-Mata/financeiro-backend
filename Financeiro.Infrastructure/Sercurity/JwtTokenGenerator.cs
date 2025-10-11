@@ -1,10 +1,11 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using Financeiro.Application.Interfaces;
+﻿using Financeiro.Application.Interfaces;
 using Financeiro.Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Financeiro.Infrastructure.Sercurity;
 
@@ -23,8 +24,8 @@ public class JwtTokenGenerator : IJwtTokenGenerator
 
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(
-            Convert.FromBase64String(_jwtSettings.SecretKey)),
-            SecurityAlgorithms.HmacSha256);
+                Encoding.UTF8.GetBytes(_jwtSettings.SecretKey!)),
+                SecurityAlgorithms.HmacSha256);
 
         var claims = new[]
         {

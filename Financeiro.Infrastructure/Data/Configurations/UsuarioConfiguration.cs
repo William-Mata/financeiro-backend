@@ -10,8 +10,7 @@ public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
     {
         builder.HasKey(u => u.UsuarioId);
 
-        builder.Property(u => u.UsuarioId)
-           .ValueGeneratedNever();
+        builder.Property(u => u.UsuarioId).IsRequired();
 
         builder.Property(u => u.Nome)
                 .IsRequired()
@@ -26,7 +25,6 @@ public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
                 .HasMaxLength(255);
 
         builder.Property(u => u.RefreshToken)
-              .IsRequired()
               .HasMaxLength(255);
 
         builder.Property(u => u.QuantidadeTentativasLogin)
@@ -37,10 +35,10 @@ public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
                 .HasConversion<string>()
                 .IsRequired();
 
-        builder.Property(u => u.DataExpiracaoRefreshToken);
-
         builder.Property(u => u.DataCadastro)
                 .IsRequired();
+
+        builder.Property(u => u.DataExpiracaoRefreshToken);
 
         builder.Property(u => u.DataUltimaAtualizacao);
 
@@ -49,5 +47,19 @@ public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
         builder.Property(u => u.DataBloqueio);
 
         builder.Ignore(x => x.PerfilDeAcessos);
+
+        #region ÍNDICES
+        builder.HasIndex(u => u.Nome)
+                .IsUnique()
+                .HasDatabaseName("IX_Usuario_Nome");
+
+        builder.HasIndex(u => u.Email)
+                .IsUnique()
+                .HasDatabaseName("UQ__Usuario__A9D10534225E4688");
+
+        builder.HasIndex(u => u.RefreshToken)
+                .IsUnique()
+                .HasDatabaseName("UQ__Usuario__DEA298DA8FEDF1BC");
+        #endregion
     }
 }

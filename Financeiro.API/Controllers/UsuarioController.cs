@@ -18,7 +18,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpGet("ListarAsync")]
-    public async Task<ActionResult<IEnumerable<UsuarioDto>>> ListarAsync(CancellationToken cancellationToken)
+    public async Task<IActionResult> ListarAsync(CancellationToken cancellationToken)
     {
         try
         {
@@ -36,7 +36,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<UsuarioDto>> BuscarPorIdAsync(uint id, CancellationToken cancellationToken)
+    public async Task<IActionResult> BuscarPorIdAsync(uint id, CancellationToken cancellationToken)
     {
         try
         {
@@ -53,7 +53,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] UsuarioCadastroDto usuario, CancellationToken cancellationToken)
+    public async Task<IActionResult> Post([FromBody] UsuarioCadastroDto usuario, CancellationToken cancellationToken)
     {
         try
         {
@@ -70,7 +70,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPut()]
-    public async Task<ActionResult> Put([FromBody] UsuarioAtualizacaoDto usuario, CancellationToken cancellationToken)
+    public async Task<IActionResult> Put([FromBody] UsuarioAtualizacaoDto usuario, CancellationToken cancellationToken)
     {
         try
         {
@@ -87,7 +87,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(uint id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete(uint id, CancellationToken cancellationToken)
     {
         try
         {

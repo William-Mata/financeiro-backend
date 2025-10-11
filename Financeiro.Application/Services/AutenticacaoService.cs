@@ -14,10 +14,7 @@ public class AutenticacaoService : IAutenticacaoService
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly ILogger<AutenticacaoService> _logger;
 
-    public AutenticacaoService(IUnitOfWork unitOfWork, 
-                                ISenhaHasher senhaHasher,
-                                IJwtTokenGenerator jwtTokenGenerator,
-                                ILogger<AutenticacaoService> logger)
+    public AutenticacaoService(IUnitOfWork unitOfWork, ISenhaHasher senhaHasher,  IJwtTokenGenerator jwtTokenGenerator, ILogger<AutenticacaoService> logger)
     {
         _unitOfWork = unitOfWork;
         _senhaHasher = senhaHasher;

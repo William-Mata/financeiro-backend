@@ -18,7 +18,7 @@ public class AutenticacaoController : ControllerBase
         _autenticacaoService = autenticacaoService;
     }
 
-    [HttpPost("login")]
+    [HttpPost("Login")]
     public async Task<IActionResult> Login([FromBody] LoginDto login, CancellationToken cancellationToken)
     {
         var result = await _autenticacaoService.LoginAsync(login, cancellationToken);
@@ -32,7 +32,7 @@ public class AutenticacaoController : ControllerBase
     }
 
 
-    [HttpPost("logout")]
+    [HttpPost("Logout")]
     [Authorize]
     public async Task<IActionResult> Logout(CancellationToken cancellationToken)
     {
@@ -49,7 +49,7 @@ public class AutenticacaoController : ControllerBase
     }
 
 
-    [HttpPost("refreshToken")]
+    [HttpPost("RefreshToken")]
     public async Task<IActionResult> RefreshToken(CancellationToken cancellationToken)
     {
         var refreshToken = Request.Cookies["refreshToken"];
