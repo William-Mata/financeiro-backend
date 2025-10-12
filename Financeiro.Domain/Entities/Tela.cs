@@ -4,8 +4,9 @@ namespace Financeiro.Domain.Entities;
 
 public class Tela : BaseEntity
 {
+    public byte TelaId { get; private set; }
     public string Nome { get; private set; } = string.Empty;
     public string Descricao { get; private set; } = string.Empty;
-    public StatusTela StatusTela { get; private set; }
-    public IEnumerable<Permissao> Permissoes { get; private set; } = [];
+    public EStatusTela Status { get; private set; }
+    public ICollection<PerfilDeAcessoTelaPermissao> PerfisDeAcessoTelasPermissoes { get; private set; } = [];
 }

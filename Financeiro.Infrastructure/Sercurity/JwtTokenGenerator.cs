@@ -1,5 +1,5 @@
 ﻿using Financeiro.Application.Interfaces;
-using Financeiro.Domain.Entities;
+using Financeiro.Domain.Entities.Configuracoes;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

@@ -7,7 +7,11 @@ public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-    public DbSet<Usuario> Usuario {get; set;}
+    public DbSet<Usuario> Usuario => Set<Usuario>();
+    public DbSet<PerfilDeAcesso> PerfilDeAcesso => Set<PerfilDeAcesso>();
+    public DbSet<Tela> Tela => Set<Tela>();
+    public DbSet<Permissao> Permissao => Set<Permissao>();
+    public DbSet<PerfilDeAcessoTelaPermissao> PerfilDeAcessoTelaPermissao => Set<PerfilDeAcessoTelaPermissao>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

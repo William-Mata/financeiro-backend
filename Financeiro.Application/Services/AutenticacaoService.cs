@@ -37,7 +37,7 @@ public class AutenticacaoService : IAutenticacaoService
                 _logger.LogWarning("Usuário com email {Email} não encontrado.", login.Email);
                 throw new UnauthorizedAccessException("Credenciais inválidas.");
             }
-            else if (usuario.Status == StatusUsuario.Bloqueado)
+            else if (usuario.Status == EStatusUsuario.Bloqueado)
             {
                 _logger.LogWarning("Usuário com email {Email} está bloqueado.", login.Email);
                 throw new UnauthorizedAccessException("Usuário bloqueado.");
@@ -80,7 +80,7 @@ public class AutenticacaoService : IAutenticacaoService
 
             var usuario = await _unitOfWork.UsuarioRepository.BuscarPorRefreshTokenAsync(refreshToken, cancellationToken);
 
-            if (usuario == null || usuario.DataExpiracaoRefreshToken <= DateTime.UtcNow || usuario.Status == StatusUsuario.Bloqueado)
+            if (usuario == null || usuario.DataExpiracaoRefreshToken <= DateTime.UtcNow || usuario.Status == EStatusUsuario.Bloqueado)
             {
                 throw new UnauthorizedAccessException("Refresh token inválido ou usuário bloqueado.");
             }

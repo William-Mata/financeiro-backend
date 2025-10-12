@@ -46,20 +46,20 @@ public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
 
         builder.Property(u => u.DataBloqueio);
 
-        builder.Ignore(x => x.PerfilDeAcessos);
+        builder.HasOne(x => x.PerfilDeAcessos)
+            .WithMany(p => p.Usuarios)
+            .HasForeignKey(u => u.PerfilDeAcessosId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-        #region ÍNDICES
-        builder.HasIndex(u => u.Nome)
-                .IsUnique()
-                .HasDatabaseName("IX_Usuario_Nome");
+        #region INDICES
+        builder.HasIndex(i => i.Nome)
+             .IsUnique();
 
-        builder.HasIndex(u => u.Email)
-                .IsUnique()
-                .HasDatabaseName("UQ__Usuario__A9D10534225E4688");
+        builder.HasIndex(i => i.Email)
+               .IsUnique();
 
-        builder.HasIndex(u => u.RefreshToken)
-                .IsUnique()
-                .HasDatabaseName("UQ__Usuario__DEA298DA8FEDF1BC");
+        builder.HasIndex(i => i.RefreshToken)
+            .IsUnique();
         #endregion
     }
 }

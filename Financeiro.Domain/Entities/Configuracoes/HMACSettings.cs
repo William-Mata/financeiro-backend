@@ -1,4 +1,4 @@
-﻿namespace Financeiro.Domain.Entities;
+﻿namespace Financeiro.Domain.Entities.Configuracoes;
 
 public class HMACSettings
 {

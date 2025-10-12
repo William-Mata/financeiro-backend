@@ -1,7 +1,7 @@
 using Financeiro.API;
 using Financeiro.API.Configurations;
 using Financeiro.Application;
-using Financeiro.Domain.Entities;
+using Financeiro.Domain.Entities.Configuracoes;
 using Financeiro.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

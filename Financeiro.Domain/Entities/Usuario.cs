@@ -5,6 +5,7 @@ namespace Financeiro.Domain.Entities;
 public class Usuario : BaseEntity
 {
     public uint UsuarioId { get; protected set; }
+    public byte PerfilDeAcessosId { get; protected set; }
     public string Nome { get; private set; } 
     public string Email { get; private set; } 
     public string Senha { get; private set; }
@@ -13,15 +14,15 @@ public class Usuario : BaseEntity
     public DateTime? DataExpiracaoRefreshToken { get; set; }
     public DateTime? DataUltimoAcesso { get; private set; }
     public DateTime? DataBloqueio { get; private set; }
-    public StatusUsuario Status {get; private set;}
-    public IEnumerable<PerfilDeAcesso>? PerfilDeAcessos { get; private set; }
+    public EStatusUsuario Status {get; private set;}
+    public PerfilDeAcesso? PerfilDeAcessos { get; private set; }
 
     public Usuario(string nome, string email, string senha)
     {
         Nome = nome;
         Email = email;
         Senha = senha;
-        Status = StatusUsuario.Ativo;
+        Status = EStatusUsuario.Ativo;
         DataCadastro = DateTime.UtcNow;
     }
        
@@ -57,25 +58,25 @@ public class Usuario : BaseEntity
 
     public void Inativar()
     {
-        Status = StatusUsuario.Inativo;
+        Status = EStatusUsuario.Inativo;
         DataUltimaAtualizacao = DateTime.UtcNow;
     }
 
     public void Ativar()
     {
-        Status = StatusUsuario.Ativo;
+        Status = EStatusUsuario.Ativo;
         DataUltimaAtualizacao = DateTime.UtcNow;
     }
 
     public void Bloquear()
     {
-        Status = StatusUsuario.Bloqueado;
+        Status = EStatusUsuario.Bloqueado;
         DataBloqueio = DateTime.UtcNow;
     }
 
     public void Desbloquear()
     {
-        Status = StatusUsuario.Ativo;
+        Status = EStatusUsuario.Ativo;
         QuantidadeTentativasLogin = 0;
         DataBloqueio = null;
     }
@@ -84,7 +85,7 @@ public class Usuario : BaseEntity
     {
         QuantidadeTentativasLogin++;
 
-        if(QuantidadeTentativasLogin >= 5 && Status != StatusUsuario.Bloqueado)
+        if(QuantidadeTentativasLogin >= 5 && Status != EStatusUsuario.Bloqueado)
             Bloquear();
     }
 

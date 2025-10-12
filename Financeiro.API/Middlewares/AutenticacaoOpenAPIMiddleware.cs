@@ -1,4 +1,4 @@
-﻿using Financeiro.Domain.Entities;
+﻿using Financeiro.Domain.Entities.Configuracoes;
 using Financeiro.Infrastructure.Sercurity;
 using Microsoft.Extensions.Options;
 

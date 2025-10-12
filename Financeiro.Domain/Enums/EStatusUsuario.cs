@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Financeiro.Domain.Enums;
 
-public enum StatusUsuario
+public enum EStatusUsuario
 {
     [Display(Name = "Inativo")]
     [Description("Inativo")]
