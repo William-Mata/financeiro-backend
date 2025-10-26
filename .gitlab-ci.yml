@@ -70,29 +70,55 @@ package:
   tags:
     - docker
 
+## Acessando o servidor via SSH para deploy
+# deploy:
+#   stage: deploy
+#   image: alpine:latest
+#   dependencies:
+#     - package
+#   before_script:
+#     - apk add --no-cache openssh-client curl
+#     - eval $(ssh-agent -s)
+#     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     - ssh-keyscan -p 2222 -H $SERVER_HOST >> ~/.ssh/known_hosts
+#   script:
+#     - |
+#       ssh -p 2222 $SERVER_USER@$SERVER_HOST "
+#         cd /srv/docker/composes/financeiro-backend/ &&
+#         echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY &&
+#         docker compose pull &&
+#         docker compose down || true &&
+#         docker compose up -d
+#       "
+#     - sleep 10
+#     - ssh -p 2222 $SERVER_USER@$SERVER_HOST "curl -f http://localhost:5000/health"
+#   environment:
+#     name: production
+#     url: http://$SERVER_HOST:5000
+#   only:
+#     - main
+#   #descomentar a linha abaixo para deploy manual.
+#   #when: manual
+#   tags:
+#     - docker
+
+
+# Deploy diretamente do gitlab runner quando está no mesmo servidor da aplicação.
 deploy:
   stage: deploy
   image: alpine:latest
   dependencies:
     - package
-  before_script:
-    - apk add --no-cache openssh-client curl
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - ssh-keyscan -p 2222 -H $SERVER_HOST >> ~/.ssh/known_hosts
   script:
-    - |
-      ssh -p 2222 $SERVER_USER@$SERVER_HOST "
-        cd /srv/docker/composes/financeiro-backend/ &&
-        echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY &&
-        docker compose pull &&
-        docker compose down || true &&
-        docker compose up -d
-      "
-    - sleep 10
-    - ssh -p 2222 $SERVER_USER@$SERVER_HOST "curl -f http://localhost:5000/health"
+    - ls
+    - cd /srv/docker/composes/financeiro-backend/ &&
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY &&
+    - docker compose pull &&
+    - docker compose down || true &&
+    - docker compose up -d
+  
   environment:
     name: production
     url: http://$SERVER_HOST:5000
@@ -102,3 +128,6 @@ deploy:
   #when: manual
   tags:
     - docker
+
+
+
