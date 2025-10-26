@@ -5,7 +5,7 @@ namespace Financeiro.Domain.Entities;
 public class Usuario : BaseEntity
 {
     public uint UsuarioId { get; protected set; }
-    public byte PerfilDeAcessosId { get; protected set; }
+    public byte PerfilDeAcessoId { get; protected set; }
     public string Nome { get; private set; } 
     public string Email { get; private set; } 
     public string Senha { get; private set; }

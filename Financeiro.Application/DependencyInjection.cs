@@ -1,7 +1,9 @@
 ﻿using Financeiro.Application.Services;
 using Financeiro.Application.Services.Interfaces;
-using Financeiro.Domain.Interfaces;
+using Financeiro.Application.Validators.Usuario;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using FluentValidation.AspNetCore;
 
 namespace Financeiro.Application;
 
@@ -13,6 +15,17 @@ public static class DependencyInjection
 
         services.AddScoped<IUsuarioService, UsuarioService>();
         services.AddScoped<IAutenticacaoService, AutenticacaoService>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddValidators(this IServiceCollection services)
+    {
+        services.AddValidatorsFromAssemblyContaining<UsuarioCadastroValidator>();
+        services.AddValidatorsFromAssemblyContaining<UsuarioAlteracaoValidator>();
+
+        services.AddFluentValidationAutoValidation();
+        services.AddFluentValidationClientsideAdapters();
 
         return services;
     }

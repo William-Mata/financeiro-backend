@@ -48,7 +48,7 @@ public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
 
         builder.HasOne(x => x.PerfilDeAcessos)
             .WithMany(p => p.Usuarios)
-            .HasForeignKey(u => u.PerfilDeAcessosId)
+            .HasForeignKey(u => u.PerfilDeAcessoId)
             .OnDelete(DeleteBehavior.Restrict);
 
         #region INDICES

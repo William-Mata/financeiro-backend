@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Financeiro.Infrastructure.Repositories;
 
-public class Repository<T> : IRepository<T> where T : BaseEntity, new()
+public class Repository<T> : IRepository<T> where T : BaseEntity
 {
     protected readonly ApplicationDbContext _applicationDbContext;
     protected readonly DbSet<T> _dbSet;

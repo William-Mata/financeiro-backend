@@ -57,6 +57,9 @@ public class UsuarioController : ControllerBase
     {
         try
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             _logger.LogInformation("Cadastrando um usuario.");
             await _usuarioService.CadastrarAsync(usuario, cancellationToken);
 
@@ -74,6 +77,9 @@ public class UsuarioController : ControllerBase
     {
         try
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             _logger.LogInformation("Atualizando um usuario.");
             await _usuarioService.AtualizarAsync(usuario, cancellationToken);
 
